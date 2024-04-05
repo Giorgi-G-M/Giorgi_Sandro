@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 assert SECRET_KEY
 FERNET = Fernet(SECRET_KEY)
 
-def main():
+def main_register():
 
     # Check if there are any users registered
     with open("results.csv", "r") as csvfile:
@@ -512,4 +512,4 @@ def add_contact_loop(user_id):
 
 
 if __name__ == "__main__":
-    main()
+    main_register()
