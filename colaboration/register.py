@@ -28,8 +28,10 @@ def register_main():
             if user == "no":
                 registration_form()
             elif user == "yes":
-                LogIn()
+                return LogIn()
                 break
+            else:
+                print("Invalid input")
         except ValueError:
             continue
 
@@ -107,7 +109,7 @@ def LogIn():
                             # Print user information for the logged-in user
                             user_info = [row["Id"], row["Username"], row["Surname"], row["Mail"]]
                             print(tabulate.tabulate([user_info], headers=["ID", "Username", "Surname", "Email"]))
-                            return True
+                            return True,user_info[0]
                 else:
                     print("Invalid email address or password. Please try again or register.")
                     user = input("Are you registered on our platform? Please enter Yes/No: ").lower()
@@ -155,7 +157,7 @@ def registration_form():
             if user_id:
                 print("\nCongratulations! You have registered successfully!")
                 print(f"\nPlease remember your Number ID '{user_id}'. If you ever forget your password, you will need it to restore your account.")
-                return LogIn()
+                return True
             else:
                 print("Error retrieving user ID.") 
             break

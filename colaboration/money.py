@@ -23,15 +23,11 @@ def get_rate():
         rate_list.append(temp)
     return rate_list
 
-#this function takes user inputs
-def input_taker():
-    money = input("Enter the currency you want to exchange and enter the currency in which you want to exchange: ")
-    money = money.strip()
-    return money
-
 #this is main function where happen currency exchange.
-def main_currency(money):
+def main_currency():
     while True:
+        money = input("Enter the currency you want to exchange and enter the currency in which you want to exchange: ")
+        money = money.strip()
         rate_getter = get_rate()
 
         user_input_actions_list = []
@@ -54,7 +50,7 @@ def main_currency(money):
                                     if second_currency == list(d.items())[0][0]:
                                         exchanged_money_in_second_currency = exchanged_money_in_gel / list(d.items())[0][1]
                                         print(f"{first_currency} in {second_currency} = {exchanged_money_in_second_currency:.2f}")
-
+                                        break
 
                     else:
                         for e in rate_getter:
@@ -63,20 +59,13 @@ def main_currency(money):
                             elif second_currency == list(e.items())[0][0]:
                                 exchanged_money_in_gel = amount_of_money / list(e.items())[0][1]
                         print(f"{first_currency} in {second_currency} = {exchanged_money_in_gel:.2f}")
-
+                        break
                 except ValueError:
                     print("Invalid input.")
                     continue
-            else:
-                print("You entered invalid cuurency")
-                continue
-
-        another_try = input("You want to try again? YES/NO ").lower()
-        if another_try == "yes":
-            pass
         else:
-            print("the proggram is over")
+            print("You entered invalid cuurency")
             break
 
 if __name__ == "__main__":
-    main_currency(input_taker())
+    main_currency()

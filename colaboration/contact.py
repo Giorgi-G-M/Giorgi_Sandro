@@ -2,11 +2,10 @@ import csv
 import tabulate
 
 
-def contact_main():
-    user_id = input("Enter your user ID: ")
-    if not get_user_contacts(user_id):
+def contact_main(id):
+    if not get_user_contacts(id):
         print("You have no contacts yet. Let's add a contact.")
-        add_contact_loop(user_id)
+        add_contact_loop(id)
     try:
         with open("contact.csv", "r") as csvfile:
             reader = csv.reader(csvfile)
@@ -14,11 +13,9 @@ def contact_main():
     except FileNotFoundError:
         is_empty = True
 
-    user_id = input("Enter your user ID: ")
-
     if is_empty:
         print("You have no contacts yet. Let's add a contact.")
-        add_contact_loop(user_id)
+        add_contact_loop(id)
 
     while True:
         print("\n1. Add New Contact")
@@ -29,21 +26,29 @@ def contact_main():
         choice = input("Enter your choice: ")
 
         if choice == "1":
-            add_contact_loop(user_id)
+            add_contact_loop(id)
         elif choice == "2":
-            modify_contact(user_id)
+            modify_contact(id)
         elif choice == "3":
-            search_contacts(user_id)
+            search_contacts(id)
         elif choice == "4":
             print("Exiting...")
             break
         else:
             print("Invalid choice. Please try again.")
 
+
+def get_user_contacts(user_id):
+    try:
+        with open("contact.csv", "r", newline="") as csvfile:
+            reader = csv.DictReader(csvfile)
+            return [row for row in reader if row["UserId"] == user_id]
+    except FileNotFoundError:
+        return []
 def add_new_contact(user_id, name, surname, phonenumber, mail):
     try:
         with open("contact.csv", "a", newline="") as csvfile:
-            fieldnames = ["UserId", "Id", "Name", "Surname", "Phonenumber", "Mail"]
+            fieldnames = ["Id", "UserId", "Name", "Surname", "Phonenumber", "Mail"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             with open("contact.csv", "r") as csvfile_read:
@@ -51,7 +56,7 @@ def add_new_contact(user_id, name, surname, phonenumber, mail):
                 next_id = max([int(row["Id"]) for row in reader if row["Id"].isdigit()], default=0) + 1
 
             writer.writerow(
-                {"UserId": user_id, "Id": next_id, "Name": name, "Surname": surname, "Phonenumber": phonenumber, "Mail": mail}
+                {"Id": next_id,"UserId": user_id, "Name": name, "Surname": surname, "Phonenumber": phonenumber, "Mail": mail}
             )
 
         print("Contact added successfully.")
@@ -62,15 +67,7 @@ def add_new_contact(user_id, name, surname, phonenumber, mail):
     except Exception as e:
         print("Error:", e)
         return False
-
-
-def get_user_contacts(user_id):
-    try:
-        with open("contact.csv", "r", newline="") as csvfile:
-            reader = csv.DictReader(csvfile)
-            return [row for row in reader if row["Id"] == user_id]
-    except FileNotFoundError:
-        return []
+    
 
 def modify_contact(user_id):
     user_contacts = get_user_contacts(user_id)
@@ -85,7 +82,8 @@ def modify_contact(user_id):
         headers = reader.fieldnames
 
         for row in reader:
-            data.append([row[header] for header in headers])
+            if row["UserId"] == user_id:
+                data.append([row[header] for header in headers])
 
         print(tabulate.tabulate(data, headers=headers, tablefmt="grid"))
 
@@ -136,7 +134,7 @@ def modify_contact(user_id):
 
                         # Update the CSV file with the modified contact
                         with open("contact.csv", "w", newline="") as csvfile:
-                            fieldnames = ["Id", "Name", "Surname", "Phonenumber", "Mail"]
+                            fieldnames = ["Id","UserId", "Name", "Surname", "Phonenumber", "Mail"]
                             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                             writer.writeheader()
                             writer.writerows(user_contacts)
@@ -164,7 +162,7 @@ def delete_contact(user_id):
 
             # Update the CSV file with the modified contact list
             with open("contact.csv", "w", newline="") as csvfile:
-                fieldnames = ["Id", "Name", "Surname", "Phonenumber", "Mail"]
+                fieldnames = ["Id","UserId", "Name", "Surname", "Phonenumber", "Mail"]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerows(user_contacts)
