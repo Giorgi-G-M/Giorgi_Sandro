@@ -148,6 +148,7 @@ def modify_contact(user_id):
 
 def delete_contact(user_id):
     user_contacts = get_user_contacts(user_id)
+    data = csv_reader()
     if not user_contacts:
         print("You have no contacts yet. Please add a contact first.")
         return False
@@ -156,22 +157,26 @@ def delete_contact(user_id):
     print(tabulate.tabulate(user_contacts, headers="keys"))
 
     contact_id = input("Enter the ID of the contact you want to delete: ")
-    for contact in user_contacts:
+    for contact in data:
         if contact["Id"] == contact_id:
-            user_contacts.remove(contact)
+            data.remove(contact)
 
-            # Update the CSV file with the modified contact list
+    # Update the CSV file with the modified contact list
             with open("contact.csv", "w", newline="") as csvfile:
                 fieldnames = ["Id","UserId", "Name", "Surname", "Phonenumber", "Mail"]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
-                writer.writerows(user_contacts)
+                writer.writerows(data)
 
             print("Contact deleted successfully.")
             return True
-
-    print("Invalid contact ID.")
+    print("Invalid ID")
     return False
+
+def csv_reader():
+    with open("contact.csv","r") as file:
+        data = [i for i in csv.DictReader(file)]
+        return data
 
 
 def search_contacts(user_id):
@@ -218,4 +223,4 @@ def add_contact_loop(user_id):
 
 
 if __name__ == "__main__":
-    contact_main()
+    contact_main(id)
