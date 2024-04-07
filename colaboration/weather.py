@@ -3,18 +3,20 @@ import datetime
 import sys
 import tabulate
 
-def weather_main():
-    while True:
-        user = input("Where are you? ")
+def inputer():
+    user = input("Where are you? ")
+    return user
 
-        if user:
-            url = f"https://api.openweathermap.org/data/2.5/weather?q={user}&APPID=02734d5341b5aa5ecb0198a4bc9a722e"
+def weather_main(place):
+    while True:
+        if place:
+            url = f"https://api.openweathermap.org/data/2.5/weather?q={place}&APPID=02734d5341b5aa5ecb0198a4bc9a722e"
             response = requests.get(url)
             data = response.json()
 
             if data["cod"] == 200:
                 weather_info = {
-                    "Location": f"{user}",
+                    "Location": f"{place}",
                     "Sunrise": sun_rise(data),
                     "Humidity": get_info(data)[0],
                     "Weather": get_info(data)[1],
@@ -106,4 +108,4 @@ def celsius_converter(data):
 
 
 if __name__=="__main__":
-    weather_main()
+    weather_main(inputer())

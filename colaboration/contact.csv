@@ -1,5 +1,4 @@
-Id,Name,Surname,Phonenumber,Mail
-1,karchava,karcho,551249494,giorgi@gmail.com
-2,giorgi,mzhavanaa,551112494,jkasnd@gmail.com
-3,giorgiiii,mzhavanaaa,3333,kjasnd
-4,sad,sad,551213,kajsnd
+Id,UserId,Name,Surname,Phonenumber,Mail
+1,1,sad,asd,213,sad
+3,2,asd,sad,14,sad
+4,2,gsd,asd,13,asf
