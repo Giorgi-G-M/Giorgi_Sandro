@@ -7,10 +7,10 @@ from settings import *
 from contact import *
 
 def main():
-      register_main()
+      user_id = register_main()
       printer()
       choice = enter_program()
-      orderer(choice)
+      orderer(choice,user_id[1])
 
 
 def printer():
@@ -22,10 +22,10 @@ def printer():
             f"6. Settings")
 
 def enter_program():
-      choice = input("Now choose from 1 to 6 which one you want to use. or just click 'ENTER' adn program will end: ")
+      choice = input("Now choose from 1 to 6 which one you want to use. or just click 'ENTER' edn program will end: ")
       return choice
 
-def orderer(choice):
+def orderer(choice,id):
       if len(choice) == 1:
             if choice.isdigit():
                   if choice == "1":
@@ -40,7 +40,7 @@ def orderer(choice):
                                     break
                         printer()
                         choice = enter_program()
-                        orderer(choice)
+                        orderer(choice,id)
 
                   elif choice == "2":
                         print("You are in 'Calculator' application")
@@ -54,7 +54,7 @@ def orderer(choice):
                                     break
                         printer()
                         choice = enter_program()
-                        orderer(choice)
+                        orderer(choice,id)
 
                   elif choice == "3":
                         print("You are in currency 'Currency exchange' application")
@@ -68,7 +68,7 @@ def orderer(choice):
                                     break
                         printer()
                         choice = enter_program()
-                        orderer(choice)
+                        orderer(choice,id)
 
                   elif choice == "4":
                         print("You are in 'Weather forecast' application")
@@ -83,36 +83,37 @@ def orderer(choice):
 
                         printer()
                         choice = enter_program()
-                        orderer(choice)
+                        orderer(choice,id)
 
                   elif not choice:
                         print("End proggram.")
                   elif choice == "5":
                         print("You are in 'contact' application")
                         while True:
-                              contact_main()
+                              contact_main(id)
                               another_try = input("If you want to use this proggram again enter YES/Y, if not enter enything else.").lower()
                               if another_try == "yes" or another_try =="y":
                                     pass
                               else:
                                     print("the proggram is over")
                                     break
-                        print()
+                        printer()
                         choice = enter_program()
-                        orderer(choice)
+                        orderer(choice,id)
                   elif choice == "6":
                         print("You are in 'settings' application")
                         while True:
                               settings_main()
-                              anothertry = input("If you want to use again the Settings proggram enter YES/Y, if not enter enything else.").lower()
-                              if anothertry == "yes" or another_try =="y":
+                              another_try = input("If you want to use again the Settings proggram enter YES/Y, if not enter enything else.").lower()
+
+                              if another_try == "yes" or another_try =="y":
                                     pass
                               else:
                                     print("the proggram is over")
                                     break
-                        print()
+                        printer()
                         choice = enter_program()
-                        orderer(choice)
+                        orderer(choice,id)
 
                   else:
                         print("Something went wrong in your input.")

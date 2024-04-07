@@ -37,5 +37,5 @@ def test_square_root():
     assert square_root(100) == "√100 = 10.0"
     assert square_root(25) == "√25 = 5.0"
     assert square_root(64) == "√64 = 8.0"
-if __name__ == "__main":
+if __name__ == "__main__":
     main()

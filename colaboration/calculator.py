@@ -1,6 +1,6 @@
 def numbers():
-    user_input = input("Enter the numbers: ")
-    return user_input
+    userinput = input("Enter the numbers: ")
+    return userinput
 
 #The next four function is for math actions.
 def plus(first_n, second_n):
@@ -25,7 +25,7 @@ def square_root(number):
 def main_calculator(operation):
     operation = operation.strip()
 
-    symbol_list = ["+", "-", "*", "/", "s"]
+    symbol_list = ["+", "-", "", "/", "s"]
     user_input_actions_list = []
 
     for i in operation:
@@ -43,9 +43,9 @@ def main_calculator(operation):
             x,y = operation.split("-")
             print(f"{x} - {y} = {round(minus(x,y),2)}")
 
-        elif "*" in operation:
-            x,y = operation.split("*")
-            print(f"{x} * {y} = {round(multiplicate(x,y),2)}")
+        elif "" in operation:
+            x,y = operation.split("")
+            print(f"{x} {y} = {round(multiplicate(x,y),2)}")
 
         elif "/" in operation:
             x,y = operation.split("/")
@@ -66,13 +66,4 @@ def main_calculator(operation):
 
 
 if __name__ == "__main__":
-    while True:
-        main_calculator(numbers())
-        again = input("Do you want another calculations? yes/no: ")
-        if again.lower() == "y" or again.lower() == "yes":
-            pass
-        elif again.lower() == "n" or again.lower() == "no":
-            print("The proggram calculator was complete. Thank you to use it.")
-            break
-        else:
-            print("Enter 'yes' or 'y' to contniue or enter 'no' or 'n' to end the proggram.")
+    main_calculator(numbers())
