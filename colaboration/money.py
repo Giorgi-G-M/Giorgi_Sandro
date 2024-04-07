@@ -1,17 +1,20 @@
 import requests
 
+#This fucntion is to take data of currencyes.
 def get_data():
     url = f"https://nbg.gov.ge/gw/api/ct/monetarypolicy/currencies/ka/json/?date=2024-03-31"
     response = requests.get(url)
     data = response.json()
     return data
 
+#this function collects all curencies in list
 def get_currencies():
     currencie_list = ["GEL"]
     for a in get_data()[0]["currencies"]:
         currencie_list.append(a["code"])
     return currencie_list
 
+#this function collects all currency rates in list
 def get_rate():
     rate_list = []
     for b in get_data()[0]["currencies"]:
@@ -20,11 +23,15 @@ def get_rate():
         rate_list.append(temp)
     return rate_list
 
-def main_currency():
-    while True:
-        money = input("Enter the currency you want to exchange and enter the currency in which you want to exchange: ")
-        money = money.strip()
+#this function takes user inputs
+def input_taker():
+    money = input("Enter the currency you want to exchange and enter the currency in which you want to exchange: ")
+    money = money.strip()
+    return money
 
+#this is main function where happen currency exchange.
+def main_currency(money):
+    while True:
         rate_getter = get_rate()
 
         user_input_actions_list = []
@@ -68,7 +75,8 @@ def main_currency():
         if another_try == "yes":
             pass
         else:
+            print("the proggram is over")
             break
 
 if __name__ == "__main__":
-    main_currency()
+    main_currency(input_taker())
