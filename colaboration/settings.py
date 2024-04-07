@@ -49,36 +49,31 @@ def decrypt_password(encrypted_password):
 
 
 # Function for deleting an account
-def delete_account():
-    while True:
-        user_mail = input("Enter your email to confirm account deletion (or type 'back' to return to previous menu): ").lower()
-        if user_mail == 'back':
-            return False  # User chose to go back
-        found = False
+def delete_account(user_mail):
+    found = False
+    with open("results.csv", "r", newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if row['Mail'] == user_mail:
+                found = True
+                break
+    if found:
+        # Proceed with account deletion
+        data_results = []
         with open("results.csv", "r", newline='') as csvfile:
             reader = csv.DictReader(csvfile)
+            fieldnames_results = reader.fieldnames
             for row in reader:
-                if row['Mail'] == user_mail:
-                    found = True
-                    break
-        if found:
-            # Proceed with account deletion
-            data_results = []
-            with open("results.csv", "r", newline='') as csvfile:
-                reader = csv.DictReader(csvfile)
-                fieldnames_results = reader.fieldnames
-                for row in reader:
-                    if row['Mail'] != user_mail:
-                        data_results.append(row)
-            with open("results.csv", "w", newline='') as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames_results)
-                writer.writeheader()
-                writer.writerows(data_results)
+                if row['Mail'] != user_mail:
+                    data_results.append(row)
+        with open("results.csv", "w", newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames_results)
+            writer.writeheader()
+            writer.writerows(data_results)
+        return True  # Deletion successful
+    else:
+        return False  # Email not found or some other issue
 
-            print(f"Account with email {user_mail} has been successfully deleted.")
-            return True  # Deletion successful
-        else:
-            print("Invalid email. Please try again.")
 
 #This function is supposted to change Name/Surname/Email
 def personal_info_changer():
