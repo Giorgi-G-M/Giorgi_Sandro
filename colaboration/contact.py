@@ -3,6 +3,10 @@ import tabulate
 
 
 def contact_main():
+    user_id = input("Enter your user ID: ")
+    if not get_user_contacts(user_id):
+        print("You have no contacts yet. Let's add a contact.")
+        add_contact_loop(user_id)
     try:
         with open("contact.csv", "r") as csvfile:
             reader = csv.reader(csvfile)
@@ -36,20 +40,18 @@ def contact_main():
         else:
             print("Invalid choice. Please try again.")
 
-
 def add_new_contact(user_id, name, surname, phonenumber, mail):
     try:
         with open("contact.csv", "a", newline="") as csvfile:
-            fieldnames = ["Id", "Name", "Surname", "Phonenumber", "Mail"]
+            fieldnames = ["UserId", "Id", "Name", "Surname", "Phonenumber", "Mail"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             with open("contact.csv", "r") as csvfile_read:
                 reader = csv.DictReader(csvfile_read)
-                ids = [int(row["Id"]) for row in reader if row["Id"].isdigit()]
-                next_id = max(ids) + 1 if ids else 1
+                next_id = max([int(row["Id"]) for row in reader if row["Id"].isdigit()], default=0) + 1
 
             writer.writerow(
-                {"Id": next_id, "Name": name, "Surname": surname, "Phonenumber": phonenumber, "Mail": mail}
+                {"UserId": user_id, "Id": next_id, "Name": name, "Surname": surname, "Phonenumber": phonenumber, "Mail": mail}
             )
 
         print("Contact added successfully.")
@@ -63,14 +65,12 @@ def add_new_contact(user_id, name, surname, phonenumber, mail):
 
 
 def get_user_contacts(user_id):
-    user_contacts = []
-    with open("contact.csv", "r", newline="") as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row["Id"] == user_id:
-                user_contacts.append(row)
-    return user_contacts
-
+    try:
+        with open("contact.csv", "r", newline="") as csvfile:
+            reader = csv.DictReader(csvfile)
+            return [row for row in reader if row["Id"] == user_id]
+    except FileNotFoundError:
+        return []
 
 def modify_contact(user_id):
     user_contacts = get_user_contacts(user_id)

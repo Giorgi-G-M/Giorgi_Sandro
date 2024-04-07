@@ -66,4 +66,11 @@ def remove_data(id):
         write_data(data)
 
 if __name__ == "__main__":
-    main_to_do()
+    while True:
+        main_to_do()
+        another_try = input("If you want to try another citi enter yes/y, if not what else you want. ").lower()
+        if another_try == "yes" or another_try =="y":
+            pass
+        else:
+            print("the proggram is over")
+            break
