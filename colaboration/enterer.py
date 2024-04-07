@@ -2,24 +2,30 @@ from calculator import main_calculator, numbers
 from to_do import main_to_do
 from money import main_currency
 from weather import weather_main
+from settings import *
 from register import *
+from contact import *
+
+
 
 def main():
-      # main_register()
+      register_main()
       printer()
       choice = enter_program()
       orderer(choice)
 
 
 def printer():
-      print("Hello, this is a program where you can choose a task you need help with:")
+      print("Hello, Welcome to our platform this is a program where you can choose a task you need help with:")
       print(f"1. TO DO" +"\n"
             f"2. Calculator" +"\n"
             f"3. Currency exchange" +"\n"
-            f"4. Weather forecast" +"\n")
+            f"4. Weather forecast" +"\n"
+            f"5. contact information" + "\n"
+            f"6. settings" + "\n")
 
 def enter_program():
-      choice = input("Now choose from 1 to 4 which one you want to use. or just click 'ENTER' adn program will end: ")
+      choice = input("Now choose from 1 to 6 which one you want to use. or just click 'ENTER' to edn program will end: ")
       return choice
 
 def orderer(choice):
@@ -53,6 +59,20 @@ def orderer(choice):
                         choice = enter_program()
                         orderer(choice)
 
+                  elif choice == "5":
+                        print("You are in 'contact' application")
+                        contact_main()
+                        print()
+                        choice = enter_program()
+                        orderer(choice)
+
+                  elif choice == "6":
+                        print("You are in 'settings' application")
+                        settings_main()
+                        print()
+                        choice = enter_program()
+                        orderer(choice)
+
                   elif not choice:
                         print("End proggram.")
 
@@ -61,6 +81,3 @@ def orderer(choice):
 
 if __name__ == "__main__":
       main()
-
-def squaree(x):
-      squared_x = x * x
