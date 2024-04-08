@@ -1,7 +1,7 @@
 from calculator import main_calculator, numbers
 from to_do import main_to_do
 from money import main_currency
-from weather import weather_main
+from weather import weather_main,inputer
 from register import *
 from settings import *
 from contact import *
@@ -73,7 +73,7 @@ def orderer(choice,id):
                   elif choice == "4":
                         print("You are in 'Weather forecast' application")
                         while True:
-                              weather_main()
+                              weather_main(inputer())
                               another_try = input("If you want to try another citi enter YES/Y, if not enter enything else. ").lower()
                               if another_try == "yes" or another_try =="y":
                                     pass
@@ -103,7 +103,7 @@ def orderer(choice,id):
                   elif choice == "6":
                         print("You are in 'settings' application")
                         while True:
-                              settings_main()
+                              settings_main(id)
                               another_try = input("If you want to use again the Settings proggram enter YES/Y, if not enter enything else.").lower()
 
                               if another_try == "yes" or another_try =="y":
