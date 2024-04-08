@@ -25,7 +25,7 @@ def square_root(number):
 def main_calculator(operation):
     operation = operation.strip()
 
-    symbol_list = ["+", "-", "", "/", "s"]
+    symbol_list = ["+", "-", "*", "/", "s"]
     user_input_actions_list = []
 
     for i in operation:
@@ -43,9 +43,9 @@ def main_calculator(operation):
             x,y = operation.split("-")
             print(f"{x} - {y} = {round(minus(x,y),2)}")
 
-        elif "" in operation:
-            x,y = operation.split("")
-            print(f"{x} {y} = {round(multiplicate(x,y),2)}")
+        elif "*" in operation:
+            x,y = operation.split("*")
+            print(f"{x} * {y} = {round(multiplicate(x,y),2)}")
 
         elif "/" in operation:
             x,y = operation.split("/")
